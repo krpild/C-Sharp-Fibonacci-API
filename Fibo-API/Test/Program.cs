@@ -1,4 +1,5 @@
-﻿using Fibonacci;
+﻿using System.Diagnostics;
+using Fibonacci;
 
 namespace Test;
 
@@ -8,10 +9,16 @@ public class Test
     {
         
         FibonacciCalculation fibo = new FibonacciCalculation();
-        
-        for (int i = 0; i <= 100; i++)
+        Stopwatch sw = new Stopwatch();
+
+        sw.Start();
+        for (int i = 0; i <= 10000; i++)
         {
-            Console.WriteLine(fibo.Fibonacci(i));
+            fibo.Fibonacci(i);
         }
+
+        sw.Stop();
+
+        Console.WriteLine("Elapsed={0}",sw.Elapsed);
     } 
 }
