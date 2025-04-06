@@ -100,6 +100,9 @@ public class FibonacciService : IFibonacciService
 
     public async Task<FibonacciResponseModel> ParseFibonacciModel(FibonacciRequestModel requestModel)
     {
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
         return await Task.Run(() => GetFibonacciRange(requestModel));
 
     }
