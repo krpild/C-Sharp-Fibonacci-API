@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Fibonacci;
+namespace Core;
 
 //Algorithm inspired by: https://www.oranlooney.com/post/fibonacci/
 

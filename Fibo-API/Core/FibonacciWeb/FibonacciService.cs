@@ -3,7 +3,7 @@ using System.Numerics;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
-namespace Fibonacci;
+namespace Core;
 
 public class FibonacciService : IFibonacciService
 {
@@ -20,8 +20,8 @@ public class FibonacciService : IFibonacciService
     
     public async Task<FibonacciResponseModel> GetFibonacciRange(FibonacciRequestModel model)
     {
-        int start = Int32.Parse(model.Start);
-        int end = Int32.Parse(model.End);
+        int start = model.Start;
+        int end = model.End;
         var tasks = new List<Task<BigInteger>>();
         FibonacciResponseModel response = new FibonacciResponseModel();
         var results = new BigInteger[end - start + 1];

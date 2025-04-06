@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Fibonacci;
+using Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Fibonacci;
+namespace Core;
 
 public class FibonacciResponseModel
 {

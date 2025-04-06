@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Fibonacci;
+namespace Core;
 
 public interface IFibonacciService
 {

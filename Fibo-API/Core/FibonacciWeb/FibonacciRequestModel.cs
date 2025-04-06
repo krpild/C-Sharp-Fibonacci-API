@@ -1,13 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Fibonacci;
-
+namespace Core;
+/// <summary>
+/// Fibonacci Request model
+/// </summary>
 public class FibonacciRequestModel
 {
     [Required]
-    public String Start { get; set; }
+    public int Start { get; set; }
     [Required]
-    public String End { get; set; }
+    public int End { get; set; }
     public bool? Cache { get; set; }
     public int? MaxTime { get; set; }
     public int? MaxMemory { get; set; }

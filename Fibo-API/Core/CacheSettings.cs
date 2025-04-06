@@ -1,4 +1,4 @@
-namespace Fibonacci;
+namespace Core;
 
 public class CacheSettings
 {
