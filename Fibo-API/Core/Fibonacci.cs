@@ -4,7 +4,7 @@ namespace Fibonacci;
 
 //Algorithm inspired by: https://www.oranlooney.com/post/fibonacci/
 
-public class FibonacciCalculation
+public class Fibonacci 
 {
     private static readonly BigInteger[] IdentityMatrix = {
         BigInteger.One, BigInteger.Zero, 
@@ -35,7 +35,7 @@ public class FibonacciCalculation
         return result;
     }
 
-    public BigInteger Fibonacci(int index)
+    public BigInteger CalculateFibonacci(int index)
     {
         if (index < 0)
             throw new ArgumentOutOfRangeException(nameof(index), index, "Fibonacci sequence does not have a negative index.");
