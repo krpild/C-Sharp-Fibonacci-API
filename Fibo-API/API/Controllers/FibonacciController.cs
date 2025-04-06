@@ -16,11 +16,15 @@ public class FibonacciController : Controller
     }
         
     [HttpGet]
-    public IActionResult Index()
+    public IActionResult Index([FromQuery] FibonacciModel model)
     {
+        Console.WriteLine(model.Start);
+        Console.WriteLine(model.End);
+
+        if (!ModelState.IsValid) return BadRequest();
         Stopwatch sw = new Stopwatch();
         sw.Start();
-        var result = _fibonacciService.GetFibonacciRangeCached(0, 10000).Result;
+        var result = _fibonacciService.GetFibonacciRangeCached(Int32.Parse(model.Start), Int32.Parse(model.End)).Result;
         Console.WriteLine(sw.ElapsedMilliseconds);
         sw.Stop();
         String[] items = new string[result.Length];
