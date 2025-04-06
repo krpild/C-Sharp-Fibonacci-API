@@ -16,12 +16,12 @@ public class FibonacciController : Controller
     }
         
     [HttpGet]
-    public IActionResult Index([FromQuery] FibonacciModel model)
+    public async Task<IActionResult> Index([FromQuery] FibonacciRequestModel requestModel)
     {
         //Check if structure or values are invalid
         if (!ModelState.IsValid) return BadRequest();
-        if (!Util.IsModelValid(model)) return BadRequest();
-        var result = _fibonacciService.ParseFibonacciModel(model);
+        if (!Util.IsModelValid(requestModel)) return BadRequest();
+        var result = await _fibonacciService.ParseFibonacciModel(requestModel);
         
         return Ok(result);
     }

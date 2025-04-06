@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Fibonacci;
 
-public class FibonacciModel
+public class FibonacciRequestModel
 {
     [Required]
     public String Start { get; set; }

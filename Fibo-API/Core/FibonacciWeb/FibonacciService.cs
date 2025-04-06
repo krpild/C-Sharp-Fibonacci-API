@@ -18,32 +18,66 @@ public class FibonacciService : IFibonacciService
         
     }
     
-    public async Task<FibonacciResponseModel> GetFibonacciRange(int start, int end)
+    public async Task<FibonacciResponseModel> GetFibonacciRange(FibonacciRequestModel model)
     {
+        int start = Int32.Parse(model.Start);
+        int end = Int32.Parse(model.End);
         var tasks = new List<Task<BigInteger>>();
         FibonacciResponseModel response = new FibonacciResponseModel();
+        var results = new BigInteger[end - start + 1];
         response.Sequence = new List<string>();
         
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
+        var first = await Task.Run(async () =>
+        {
+            
+            if (model.Cache is null or true) return CachedFibonacci(start);
+            return _fibonacci.CalculateFibonacci(start);
+        });
+        await Task.Delay(500);
+        sw.Stop();
         
-        for (int i = start; i <= end; i++)
+        if (model.MaxTime != 0 && sw.ElapsedMilliseconds > model.MaxTime)
+        {
+            throw new TimeoutException("First Fibonacci number took too long.");
+        }
+        
+        response.Sequence.Add(first.ToString());
+        sw.Start();
+        
+        for (int i = start + 1; i <= end; i++)
         {
             int index = i;
             long currentMemory = GC.GetTotalMemory(false);
-
-            tasks.Add(Task.Run(() => CachedFibonacci(index)));
-            
-            if (currentMemory > 1024 * 1024 * 5)
+            Console.WriteLine(currentMemory);
+            if (currentMemory > model.MaxMemory && model.MaxMemory != null)
             {
-                if (response.Errors == null)
-                {
-                    response.Errors = new List<string>();
-                }
-                response.Errors.Add("Program ran out of memory");
+                
+                AddError(response, "Program ran out of memory");
                 break;
             }
             
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedMilliseconds);
+            if (model.MaxTime != null && sw.ElapsedMilliseconds > model.MaxTime)
+            {
+                
+                AddError(response, "Program ran out of time");
+                break;
+            }
+            sw.Start();
+
+            tasks.Add(Task.Run(async () => {
+                await Task.Delay(500);
+                if (model.Cache is null or true) return CachedFibonacci(index);
+                return _fibonacci.CalculateFibonacci(index);
+                
+            }));
+            
+            
         }
-        var results = await Task.WhenAll(tasks);
+        results = await Task.WhenAll(tasks);
             
         for (int i = 0; i < results.Length; i++)
         {
@@ -51,9 +85,7 @@ public class FibonacciService : IFibonacciService
             {
                 response.Sequence.Add(results[i].ToString());
             }
-            
         }
-        
         return response;
     }
 
@@ -66,10 +98,15 @@ public class FibonacciService : IFibonacciService
         });
     }
 
-    public FibonacciResponseModel ParseFibonacciModel(FibonacciModel model)
+    public async Task<FibonacciResponseModel> ParseFibonacciModel(FibonacciRequestModel requestModel)
     {
-        return GetFibonacciRange(Int32.Parse(model.Start), Int32.Parse(model.End)).Result;
+        return await Task.Run(() => GetFibonacciRange(requestModel));
 
     }
     
+    private void AddError(FibonacciResponseModel response, string message)
+    {
+        response.Errors ??= new List<string>();
+        response.Errors.Add(message);
+    }
 }

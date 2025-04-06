@@ -5,21 +5,20 @@ namespace Fibonacci;
 
 public static class Util
 {
-    public static bool IsModelValid(FibonacciModel model)
+    public static bool IsModelValid(FibonacciRequestModel requestModel)
     {
         try
         {
-            int start = Int32.Parse(model.Start);
-            int end = Int32.Parse(model.End);
-            Console.WriteLine(start);
-            Console.WriteLine(end);
+            int start = Int32.Parse(requestModel.Start);
+            int end = Int32.Parse(requestModel.End);
+            
             if (!IsValidFibonacciIndex(start) ||
                 !IsValidFibonacciIndex(end) ||
                 !IsEndLargerThanStart(start, end)) return false;
             
-            if (model.MaxMemory is <= 0) return false;
+            if (requestModel.MaxMemory is <= 0) return false;
             
-            if (model.MaxTime is <= 0) return false;
+            if (requestModel.MaxTime is <= 0) return false;
 
         }
         catch (Exception e)
@@ -33,7 +32,7 @@ public static class Util
     
     private static bool IsValidFibonacciIndex(int value)
     {
-        return value is >= 0 and <= 10000;
+        return value is >= 0 and <= 20000;
     }
 
     private static bool IsEndLargerThanStart(int start, int end)
