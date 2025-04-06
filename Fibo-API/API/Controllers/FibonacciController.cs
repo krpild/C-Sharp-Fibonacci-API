@@ -18,18 +18,14 @@ public class FibonacciController : Controller
     [HttpGet]
     public IActionResult Index([FromQuery] FibonacciModel model)
     {
-        Console.WriteLine(model.Start);
-        Console.WriteLine(model.End);
-
-        if (!ModelState.IsValid) return BadRequest();
-        Stopwatch sw = new Stopwatch();
-        sw.Start();
+        
+        //Check if structure or values are valid
+        if (!ModelState.IsValid || !model.IsModelValid()) return BadRequest();
+        
         var result = _fibonacciService.GetFibonacciRangeCached(Int32.Parse(model.Start), Int32.Parse(model.End)).Result;
-        Console.WriteLine(sw.ElapsedMilliseconds);
-        sw.Stop();
+        
         String[] items = new string[result.Length];
         
-
         for (int i = 0; i < result.Length; i++)
         {
             items[i] = result[i].ToString();
