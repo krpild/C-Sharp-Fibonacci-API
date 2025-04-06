@@ -50,7 +50,6 @@ public class FibonacciService : IFibonacciService
         {
             int index = i;
             long currentMemory = GC.GetTotalMemory(false);
-            Console.WriteLine(currentMemory);
             if (currentMemory > model.MaxMemory && model.MaxMemory != null)
             {
                 
@@ -59,7 +58,6 @@ public class FibonacciService : IFibonacciService
             }
             
             sw.Stop();
-            Console.WriteLine(sw.ElapsedMilliseconds);
             if (model.MaxTime != null && sw.ElapsedMilliseconds > model.MaxTime)
             {
                 
