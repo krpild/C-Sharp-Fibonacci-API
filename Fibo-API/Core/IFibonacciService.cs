@@ -4,5 +4,5 @@ namespace Fibonacci;
 
 public interface IFibonacciService
 {
-    public Task<List<BigInteger>> GetFibonacciRangeCached(int start, int end);
+    public Task<BigInteger[]> GetFibonacciRangeCached(int start, int end);
 }

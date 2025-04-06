@@ -17,7 +17,7 @@ public class FibonacciService : IFibonacciService
         
     }
     
-    public async Task<List<BigInteger>> GetFibonacciRangeCached(int start, int end)
+    public async Task<BigInteger[]> GetFibonacciRangeCached(int start, int end)
     {
         var tasks = new List<Task<BigInteger>>();
 
@@ -35,6 +35,8 @@ public class FibonacciService : IFibonacciService
         }
 
         var results = await Task.WhenAll(tasks);
-        return results.ToList();
+        
+        return results;
     }
+    
 }
