@@ -21,7 +21,6 @@ public class FibonacciController : Controller
         //Check if structure or values are invalid
         if (!ModelState.IsValid) return BadRequest();
         if (!Util.IsModelValid(model)) return BadRequest();
-        
         var result = _fibonacciService.ParseFibonacciModel(model);
         
         return Ok(result);

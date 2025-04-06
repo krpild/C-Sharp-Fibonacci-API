@@ -4,5 +4,5 @@ namespace Fibonacci;
 
 public interface IFibonacciService
 {
-    public String[] ParseFibonacciModel(FibonacciModel model);
+    public FibonacciResponseModel ParseFibonacciModel(FibonacciModel model);
 }
