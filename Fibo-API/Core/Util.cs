@@ -5,13 +5,14 @@ namespace Fibonacci;
 
 public static class Util
 {
-    public static bool IsModelValid(this FibonacciModel model)
+    public static bool IsModelValid(FibonacciModel model)
     {
         try
         {
             int start = Int32.Parse(model.Start);
-            int end = Int32.Parse(model.Start);
-            
+            int end = Int32.Parse(model.End);
+            Console.WriteLine(start);
+            Console.WriteLine(end);
             if (!IsValidFibonacciIndex(start) ||
                 !IsValidFibonacciIndex(end) ||
                 !IsEndLargerThanStart(start, end)) return false;
@@ -30,12 +31,12 @@ public static class Util
         return true;
     }
     
-    private static bool IsValidFibonacciIndex(this int value)
+    private static bool IsValidFibonacciIndex(int value)
     {
         return value is >= 0 and <= 10000;
     }
 
-    private static bool IsEndLargerThanStart(this int start, int end)
+    private static bool IsEndLargerThanStart(int start, int end)
     {
         return start <= end;
     }
